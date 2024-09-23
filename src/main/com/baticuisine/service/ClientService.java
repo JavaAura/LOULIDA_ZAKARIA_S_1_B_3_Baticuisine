@@ -2,6 +2,7 @@ package main.com.baticuisine.service;
 
 
 import main.com.baticuisine.model.Client;
+import main.com.baticuisine.repository.Implementation.ClientRepositoryImpl;
 import main.com.baticuisine.repository.Interfaces.ClientRepository;
 
 import java.util.List;
@@ -9,10 +10,10 @@ import java.util.UUID;
 
 public class ClientService {
 
-    private final ClientRepository clientRepository;
+    private final ClientRepositoryImpl clientRepository;
 
-    public ClientService(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
+    public ClientService() {
+        this.clientRepository = new ClientRepositoryImpl();
     }
 
     public void createClient(Client client) {
@@ -21,6 +22,10 @@ public class ClientService {
 
     public Client getClientById(UUID id) {
         return clientRepository.findById(id.toString());
+    }
+
+    public Client getClientByName(String name) {
+        return clientRepository.findByName(name);
     }
 
     public List<Client> getAllClients() {
