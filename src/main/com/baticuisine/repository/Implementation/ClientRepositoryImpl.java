@@ -1,5 +1,6 @@
 package main.com.baticuisine.repository.Implementation;
 
+import main.com.baticuisine.DatabaseConnection.DatabaseConnection;
 import main.com.baticuisine.model.Client;
 import main.com.baticuisine.repository.Interfaces.ClientRepository;
 
@@ -12,8 +13,13 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     private Connection connection;
 
-    public ClientRepositoryImpl(Connection connection) {
-        this.connection = connection;
+    public ClientRepositoryImpl( ) {
+        try {
+            this.connection = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
     }
 
     @Override
@@ -45,6 +51,23 @@ public class ClientRepositoryImpl implements ClientRepository {
         }
         return null;
     }
+
+
+    public Client findByName(String name) {
+        String sql = "SELECT * FROM client WHERE name = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setObject(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return mapResultSetToClient(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
     @Override
     public List<Client> findAll() {

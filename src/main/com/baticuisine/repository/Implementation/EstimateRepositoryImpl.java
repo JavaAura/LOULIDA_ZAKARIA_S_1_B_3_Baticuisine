@@ -1,6 +1,7 @@
 package main.com.baticuisine.repository.Implementation;
 
 
+import main.com.baticuisine.DatabaseConnection.DatabaseConnection;
 import main.com.baticuisine.model.Estimate;
 import main.com.baticuisine.repository.Interfaces.EstimateRepository;
 
@@ -13,8 +14,12 @@ public class EstimateRepositoryImpl implements EstimateRepository {
 
     private Connection connection;
 
-    public EstimateRepositoryImpl(Connection connection) {
-        this.connection = connection;
+    public EstimateRepositoryImpl() {
+        try {
+            this.connection = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
