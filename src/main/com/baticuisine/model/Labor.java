@@ -7,8 +7,8 @@ public class Labor extends Component {
     private double hoursWorked;
     private double productivityFactor;
 
-    public Labor(UUID id , String name, double hourlyRate, double hoursWorked, double vatRate, double productivityFactor, UUID project_id) {
-        super(id ,name, vatRate, "Labor",project_id);
+    public Labor(UUID id , String name, double hourlyRate, double hoursWorked, double vatRate, double productivityFactor,componentType componentType, UUID project_id) {
+        super(id ,name, vatRate,componentType,project_id);
         this.hourlyRate = hourlyRate;
         this.hoursWorked = hoursWorked;
         this.productivityFactor = productivityFactor;
@@ -45,4 +45,6 @@ public class Labor extends Component {
     public void setProductivityFactor(double productivityFactor) {
         this.productivityFactor = productivityFactor;
     }
+
+
 }

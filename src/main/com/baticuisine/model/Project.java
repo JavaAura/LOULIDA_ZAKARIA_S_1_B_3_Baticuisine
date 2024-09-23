@@ -9,17 +9,17 @@ public class Project {
     private double profitMargin;
     private double totalCost;
     private ProjectStatus status;
+    private double surface;
     private Client client;
     private List<Component> components;
 
-    public Project(UUID id, Estimate estimate, List<Component> components, Client client, ProjectStatus status, double totalCost, double profitMargin, String projectName) {
+    public Project(UUID id,double surface ,   Estimate estimate, List<Component> components, Client client, ProjectStatus status, double totalCost, double profitMargin, String projectName) {
         this.id = id;
+        this.surface =surface;
         this.estimate = estimate;
         this.components = components;
         this.client = client;
         this.status = status;
-        this.totalCost = totalCost;
-        this.profitMargin = profitMargin;
         this.projectName = projectName;
     }
 
@@ -29,6 +29,13 @@ public class Project {
         this.id = UUID.randomUUID(); // Automatically generate a new UUID when creating a project
     }
 
+    public double getSurface() {
+        return surface;
+    }
+
+    public void setSurface(double surface) {
+        this.surface = surface;
+    }
 
     public UUID getId() {
         return id;

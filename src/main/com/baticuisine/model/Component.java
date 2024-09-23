@@ -6,10 +6,10 @@ public abstract class Component {
     private UUID id;
     protected String name;
     protected double vatRate;
-    protected String componentType;
+    protected componentType componentType;
     private UUID project_id;
 
-    public Component(UUID id ,String name, double vatRate, String componentType ,UUID project_id) {
+    public Component(UUID id ,String name, double vatRate, componentType componentType ,UUID project_id) {
         this.id = id;
         this.name = name;
         this.vatRate = vatRate;
@@ -55,11 +55,11 @@ public abstract class Component {
         this.vatRate = vatRate;
     }
 
-    public String getComponentType() {
+    public componentType getComponentType() {
         return componentType;
     }
 
-    public void setComponentType(String componentType) {
+    public void setComponentType(componentType componentType) {
         this.componentType = componentType;
     }
 }
