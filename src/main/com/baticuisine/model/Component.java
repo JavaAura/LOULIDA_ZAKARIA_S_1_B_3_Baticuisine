@@ -1,4 +1,4 @@
-package com.baticuisine.model;
+package main.com.baticuisine.model;
 
 import java.util.UUID;
 

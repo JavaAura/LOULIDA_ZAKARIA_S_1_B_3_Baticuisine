@@ -1,7 +1,7 @@
-package com.baticuisine.repository.Interfaces;
+package main.com.baticuisine.repository.Interfaces;
 
 
-import com.baticuisine.model.Component;
+import main.com.baticuisine.model.Component;
 
 import java.util.List;
 

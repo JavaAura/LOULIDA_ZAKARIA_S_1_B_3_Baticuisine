@@ -1,4 +1,4 @@
-package com.baticuisine.model;
+package main.com.baticuisine.model;
 
 public enum ProjectStatus {
     IN_PROGRESS,

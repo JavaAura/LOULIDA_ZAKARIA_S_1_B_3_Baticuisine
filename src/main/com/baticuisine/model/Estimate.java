@@ -1,4 +1,4 @@
-package com.baticuisine.model;
+package main.com.baticuisine.model;
 
 import java.util.Date;
 import java.util.UUID;
@@ -19,10 +19,7 @@ public class Estimate {
     }
 
     public Estimate(UUID id) {
-
-            this.id = UUID.randomUUID(); // Automatically generate a new UUID when creating a project
-
-
+        this.id = UUID.randomUUID(); // Automatically generate a new UUID when creating a project
     }
 
     public void acceptEstimate() {

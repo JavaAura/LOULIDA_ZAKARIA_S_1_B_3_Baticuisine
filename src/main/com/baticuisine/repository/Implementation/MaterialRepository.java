@@ -1,8 +1,8 @@
-package com.baticuisine.repository.Implementation;
+package main.com.baticuisine.repository.Implementation;
 
-import com.baticuisine.model.Component;
-import com.baticuisine.model.Material;
-import com.baticuisine.repository.Interfaces.ComponentRepository;
+import main.com.baticuisine.model.Component;
+import main.com.baticuisine.model.Material;
+import main.com.baticuisine.repository.Interfaces.ComponentRepository;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
-package com.baticuisine.model;
+package main.com.baticuisine.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -89,6 +88,20 @@ public class Project {
 
     public void setComponents(List<Component> components) {
         this.components = components;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", profitMargin=" + profitMargin +
+                ", totalCost=" + totalCost +
+                ", status=" + status +
+                ", client=" + client +
+                ", components=" + components +
+                ", estimate=" + estimate +
+                '}';
     }
 
     public Estimate getEstimate() {

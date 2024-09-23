@@ -1,8 +1,8 @@
-package com.baticuisine.repository.Implementation;
+package main.com.baticuisine.repository.Implementation;
 
 
-import com.baticuisine.model.Project;
-import com.baticuisine.model.ProjectStatus;
+import main.com.baticuisine.model.Project;
+import main.com.baticuisine.model.ProjectStatus;
 
 import java.sql.*;
 import java.util.ArrayList;

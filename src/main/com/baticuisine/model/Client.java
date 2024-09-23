@@ -1,4 +1,4 @@
-package com.baticuisine.model;
+package main.com.baticuisine.model;
 
 import java.util.UUID;
 
@@ -17,7 +17,7 @@ public class Client {
         this.name = name;
     }
 
-    public Client(UUID id) {
+    public Client() {
         this.id = UUID.randomUUID();
     }
 
@@ -29,8 +29,7 @@ public class Client {
         this.id = id;
     }
 
-    public Client() {
-    }
+
 
     public String getName() {
         return name;
