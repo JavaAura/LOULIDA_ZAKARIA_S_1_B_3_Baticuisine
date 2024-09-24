@@ -9,9 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ComponentRepository {
-    Optional<Component> findById(UUID id);
-    List<Component> findAll();
+
     void save(Component component);
-    void update(Component component);
-    void delete(UUID id);
+
 }
