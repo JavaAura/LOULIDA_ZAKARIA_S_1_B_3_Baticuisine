@@ -17,11 +17,15 @@ public class Labor extends Component {
     public Labor() {
     }
 
-    @Override
-    public double calculateCost() {
+    // Method to calculate labor cost without VAT
+    public double calculateCostWithoutVAT() {
         return hourlyRate * hoursWorked * productivityFactor;
     }
 
+    // Method to calculate labor cost with VAT
+    public double calculateCostWithVAT() {
+        return calculateCostWithoutVAT() * (1 + vatRate );
+    }
     public double getHourlyRate() {
         return hourlyRate;
     }

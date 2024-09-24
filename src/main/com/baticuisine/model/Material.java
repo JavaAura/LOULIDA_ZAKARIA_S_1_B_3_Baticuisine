@@ -52,9 +52,13 @@ public class Material extends Component {
         this.qualityCoefficient = qualityCoefficient;
     }
 
-    @Override
-    public double calculateCost() {
+    public double calculateCostWithoutVAT() {
         return (unitCost * quantity * qualityCoefficient) + transportCost;
+    }
+
+    // Method to calculate total cost with VAT
+    public double calculateCostWithVAT() {
+        return calculateCostWithoutVAT() * (1 +  vatRate );
     }
 
 

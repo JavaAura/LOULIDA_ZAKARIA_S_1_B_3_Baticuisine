@@ -119,11 +119,34 @@ public class Project {
         this.estimate = estimate;
     }
 
-    public void calculateTotalCost() {
+    public double  calculateTotalCostWithoutVAT() {
         double componentCost = components.stream()
-                .mapToDouble(Component::calculateCost)
+                .mapToDouble(Component::calculateCostWithoutVAT)
                 .sum();
-        this.totalCost = componentCost * (1 + profitMargin);
+       return  this.totalCost = componentCost ;
     }
 
+    public double  calculateTotalCostWithVAT() {
+        double componentCost = components.stream()
+                .mapToDouble(Component::calculateCostWithVAT)
+                .sum();
+        return this.totalCost = componentCost ;
+    }
+    public double  calculateTotalCostWithVAT_WithProfitmargin() {
+        double componentCost = components.stream()
+                .mapToDouble(Component::calculateCostWithVAT)
+                .sum();
+
+        return this.totalCost = componentCost * (1 + profitMargin/100);
+    }
+    public double  calculateTotalCostWithVAT_WithProfitmarginDiscounted() {
+        double componentCost = components.stream()
+                .mapToDouble(Component::calculateCostWithVAT)
+                .sum();
+       if(client.isProfessional()){
+        return this.totalCost = (componentCost * (1 + profitMargin/100))*0.95;
+       }else {
+           return this.totalCost = componentCost * (1 + profitMargin/100);
+       }
+     }
 }
