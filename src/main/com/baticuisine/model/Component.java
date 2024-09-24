@@ -37,7 +37,9 @@ public abstract class Component {
         this.id = id;
     }
 
-    public abstract double calculateCost();
+
+    public abstract double calculateCostWithVAT();
+    public abstract double calculateCostWithoutVAT();
 
     public String getName() {
         return name;
