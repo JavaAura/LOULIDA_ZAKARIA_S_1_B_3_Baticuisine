@@ -69,46 +69,10 @@ public class ClientRepositoryImpl implements ClientRepository {
 
 
 
-    @Override
-    public List<Client> findAll() {
-        List<Client> clients = new ArrayList<>();
-        String sql = "SELECT * FROM client";
-        try (Statement stmt = connection.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                clients.add(mapResultSetToClient(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return clients;
-    }
 
-    @Override
-    public void update(Client client) {
-        String sql = "UPDATE client SET name = ?, address = ?, phone = ?, is_professional = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, client.getName());
-            stmt.setString(2, client.getAddress());
-            stmt.setString(3, client.getPhone());
-            stmt.setBoolean(4, client.isProfessional());
-            stmt.setObject(5, client.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public void delete(String id) {
-        String sql = "DELETE FROM client WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setObject(1, UUID.fromString(id));
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 
     private Client mapResultSetToClient(ResultSet rs) throws SQLException {
         UUID id = UUID.fromString(rs.getString("id"));
