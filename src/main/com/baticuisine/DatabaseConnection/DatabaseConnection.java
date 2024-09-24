@@ -1,5 +1,5 @@
 package main.com.baticuisine.DatabaseConnection;
-
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,13 +9,27 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
     private Connection connection;
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/Baticuizine";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "hh180484";
+
+
+
+    private static final String URL = "jdbc:postgresql://localhost:5432/";
+
 
     private DatabaseConnection() throws SQLException {
         try {
-            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+
+
+
+            // Load environment variables from .env file
+             final Dotenv dotenv = Dotenv.configure().load();
+            // Retrieve variables
+            String dbName = dotenv.get("DB_NAME");
+            String dbUser = dotenv.get("DB_USER");
+            String dbPassword = dotenv.get("DB_PASSWORD");
+
+            // Build the database URL with the environment variable
+            String databaseUrl = URL+dbName;
+            this.connection = DriverManager.getConnection(URL, dbUser, dbPassword);
             System.out.println("Connection resussie!");
             System.out.println(connection);
         } catch (SQLException e) {
@@ -49,3 +63,6 @@ public class DatabaseConnection {
         }
     }
 }
+
+
+
