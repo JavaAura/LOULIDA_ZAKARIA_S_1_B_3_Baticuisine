@@ -6,6 +6,7 @@ import main.com.baticuisine.model.Estimate;
 import main.com.baticuisine.repository.Interfaces.EstimateRepository;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,13 +25,14 @@ public class EstimateRepositoryImpl implements EstimateRepository {
 
     @Override
     public void save(Estimate estimate) {
-        String sql = "INSERT INTO estimate (id, estimated_amount, issue_date, validity_date, is_accepted) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO estimate (id, estimated_amount, issue_date, validity_date, is_accepted,project_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setObject(1, estimate.getId());
             stmt.setDouble(2, estimate.getEstimatedAmount());
-            stmt.setDate(3, new java.sql.Date(estimate.getIssueDate().getTime()));
-            stmt.setDate(4, new java.sql.Date(estimate.getValidityDate().getTime()));
+            stmt.setDate(3, Date.valueOf(estimate.getIssueDate()));
+            stmt.setDate(4, Date.valueOf(estimate.getValidityDate()));
             stmt.setBoolean(5, estimate.isAccepted());
+            stmt.setObject(6, estimate.getProject_id());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,10 +40,10 @@ public class EstimateRepositoryImpl implements EstimateRepository {
     }
 
     @Override
-    public Estimate findById(String id) {
-        String sql = "SELECT * FROM estimate WHERE id = ?";
+    public Estimate findById(UUID id) {
+        String sql = "SELECT * FROM estimate WHERE project_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setObject(1, UUID.fromString(id));
+            stmt.setObject(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return mapResultSetToEstimate(rs);
@@ -72,8 +74,8 @@ public class EstimateRepositoryImpl implements EstimateRepository {
         String sql = "UPDATE estimate SET estimated_amount = ?, issue_date = ?, validity_date = ?, is_accepted = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDouble(1, estimate.getEstimatedAmount());
-            stmt.setDate(2, new java.sql.Date(estimate.getIssueDate().getTime()));
-            stmt.setDate(3, new java.sql.Date(estimate.getValidityDate().getTime()));
+            stmt.setDate(2, Date.valueOf(estimate.getIssueDate()));
+            stmt.setDate(3, Date.valueOf(estimate.getValidityDate()));
             stmt.setBoolean(4, estimate.isAccepted());
             stmt.setObject(5, estimate.getId());
             stmt.executeUpdate();
@@ -96,9 +98,10 @@ public class EstimateRepositoryImpl implements EstimateRepository {
     private Estimate mapResultSetToEstimate(ResultSet rs) throws SQLException {
         UUID id = UUID.fromString(rs.getString("id"));
         double estimatedAmount = rs.getDouble("estimated_amount");
-        Date issueDate = rs.getDate("issue_date");
-        Date validityDate = rs.getDate("validity_date");
+        LocalDate issueDate = rs.getDate("issue_date").toLocalDate();
+        LocalDate validityDate = rs.getDate("validity_date").toLocalDate();
         boolean isAccepted = rs.getBoolean("is_accepted");
-        return new Estimate(id, estimatedAmount, issueDate, validityDate, isAccepted);
+        UUID project_id = UUID.fromString(rs.getString("project_id"));
+        return new Estimate(id, estimatedAmount, issueDate, validityDate, isAccepted,project_id);
     }
 }

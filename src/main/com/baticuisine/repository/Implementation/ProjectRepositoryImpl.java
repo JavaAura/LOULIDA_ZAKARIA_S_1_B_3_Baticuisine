@@ -103,6 +103,7 @@ public class ProjectRepositoryImpl {
                 "    c.phone AS client_phone, " +
                 "    c.is_professional AS client_professional, " +
                 "    mat.id AS component_id, " +
+                "    mat.vat_rate AS vat_rate, " +
                 "    mat.name AS component_name, " +
                 "    mat.unit_cost AS material_unit_cost, " +
                 "    mat.quantity AS material_quantity, " +
@@ -130,6 +131,7 @@ public class ProjectRepositoryImpl {
                 "    c.phone AS client_phone, " +
                 "    c.is_professional AS client_professional, " +
                 "    lab.id AS component_id, " +
+                "    lab.vat_rate AS vat_rate, " +
                 "    lab.name AS component_name, " +
                 "    NULL AS material_unit_cost, " +
                 "    NULL AS material_quantity, " +
@@ -177,6 +179,7 @@ public class ProjectRepositoryImpl {
                         "    c.is_professional AS client_professional, " +
                         "    comp.component_id, " +
                         "    comp.component_name, " +
+                        "    comp.vat_rate, " +
                         "    comp.material_unit_cost, " +
                         "    comp.material_quantity, " +
                         "    comp.material_transport_cost, " +
@@ -191,6 +194,7 @@ public class ProjectRepositoryImpl {
                         "    SELECT " +
                         "        mat.project_id, " +
                         "        mat.id AS component_id, " +
+                        "    mat.vat_rate AS vat_rate, " +
                         "        mat.name AS component_name, " +
                         "        mat.unit_cost AS material_unit_cost, " +
                         "        mat.quantity AS material_quantity, " +
@@ -205,6 +209,7 @@ public class ProjectRepositoryImpl {
                         "    SELECT " +
                         "        lab.project_id, " +
                         "        lab.id AS component_id, " +
+                        "    lab.vat_rate AS vat_rate, " +
                         "        lab.name AS component_name, " +
                         "        NULL AS material_unit_cost, " +
                         "        NULL AS material_quantity, " +
@@ -262,6 +267,7 @@ public class ProjectRepositoryImpl {
                     if ("MATERIAL".equals(componentType)) {
                         Material material = new Material();
                         material.setId(componentId);
+                        material.setVatRate(rs.getDouble("vat_rate"));
                         material.setName(rs.getString("component_name"));
                         material.setUnitCost(rs.getDouble("material_unit_cost"));
                         material.setQuantity(rs.getDouble("material_quantity"));
@@ -271,6 +277,7 @@ public class ProjectRepositoryImpl {
                     } else if ("LABOR".equals(componentType)) {
                         Labor labor = new Labor();
                         labor.setId(componentId);
+                        labor.setVatRate(rs.getDouble("vat_rate"));
                         labor.setName(rs.getString("component_name"));
                         labor.setHourlyRate(rs.getDouble("labor_hourly_rate"));
                         labor.setHoursWorked(rs.getDouble("labor_hours_worked"));
@@ -292,7 +299,7 @@ public class ProjectRepositoryImpl {
     }
 
     public void save(Project project) {
-        String sql = "INSERT INTO project (id, project_name, status, client_id ,surface) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO project (id, project_name, status, client_id ,surface,profit_margin) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setObject(1, project.getId());
             stmt.setString(2, project.getProjectName());
@@ -301,36 +308,15 @@ public class ProjectRepositoryImpl {
 
             stmt.setObject(4, project.getClient().getId());
             stmt.setDouble(5,project.getSurface());
+            stmt.setDouble(6,project.getProfitMargin());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Project project) {
-        String sql = "UPDATE project SET project_name = ?, profit_margin = ?, total_cost = ?, status = ?, client_id = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, project.getProjectName());
-            stmt.setDouble(2, project.getProfitMargin());
-            stmt.setDouble(3, project.getTotalCost());
-            stmt.setString(4, project.getStatus().name());
-            stmt.setObject(5, project.getClient().getId());
-            stmt.setObject(6, project.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void delete(UUID id) {
-        String sql = "DELETE FROM project WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setObject(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private Project mapResultSetToProject(ResultSet rs) throws SQLException {
         Project project = new Project();
@@ -364,6 +350,7 @@ public class ProjectRepositoryImpl {
                 material.setName(rs.getString("component_name"));
                 material.setUnitCost(rs.getDouble("material_unit_cost"));
                 material.setQuantity(rs.getDouble("material_quantity"));
+                material.setVatRate(rs.getDouble("vat_rate"));
                 material.setTransportCost(rs.getDouble("material_transport_cost"));
                 material.setQualityCoefficient(rs.getDouble("material_quality_coefficient"));
                 materials.add(material);
@@ -371,6 +358,7 @@ public class ProjectRepositoryImpl {
                 Labor labor = new Labor();
                 labor.setId(UUID.fromString(rs.getString("component_id")));
                 labor.setName(rs.getString("component_name"));
+                labor.setVatRate(rs.getDouble("vat_rate"));
                 labor.setHourlyRate(rs.getDouble("labor_hourly_rate"));
                 labor.setHoursWorked(rs.getDouble("labor_hours_worked"));
                 labor.setProductivityFactor(rs.getDouble("labor_productivity_factor"));
