@@ -28,15 +28,5 @@ public class ClientService {
         return clientRepository.findByName(name);
     }
 
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
-    }
 
-    public void updateClient(Client client) {
-        clientRepository.update(client);
-    }
-
-    public void deleteClient(UUID id) {
-        clientRepository.delete(id.toString());
-    }
 }

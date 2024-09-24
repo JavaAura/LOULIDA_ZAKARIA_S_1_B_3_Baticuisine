@@ -37,11 +37,11 @@ public class ClientRepositoryImpl implements ClientRepository {
         }
     }
 
-    @Override
-    public Client findById(String id) {
+
+    public Client findById(String name) {
         String sql = "SELECT * FROM client WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setObject(1, UUID.fromString(id));
+            stmt.setObject(1, name);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return mapResultSetToClient(rs);
@@ -51,7 +51,6 @@ public class ClientRepositoryImpl implements ClientRepository {
         }
         return null;
     }
-
 
     public Client findByName(String name) {
         String sql = "SELECT * FROM client WHERE name = ?";
@@ -69,8 +68,8 @@ public class ClientRepositoryImpl implements ClientRepository {
 
 
 
-
-
+   
+   
 
 
 

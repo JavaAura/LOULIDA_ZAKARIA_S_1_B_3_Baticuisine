@@ -23,13 +23,6 @@ public class EstimateController {
         return estimateService.getEstimateById(id);
     }
 
-    public List<Estimate> getAllEstimates() {
-        return estimateService.getAllEstimates();
-    }
-
-    public void updateEstimate(Estimate estimate) {
-        estimateService.updateEstimate(estimate);
-    }
 
     public void deleteEstimate(UUID id) {
         estimateService.deleteEstimate(id);

@@ -127,9 +127,9 @@ private  static final InputValidator inputValidator =new InputValidator(scanner)
 
     private static void madeEstimate(Project project){
 
-        LocalDate emissionDate = inputValidator.validateDateInput("Entrez la date d'emission du devis (AAAA-MM-JJ) :");
+        LocalDate emissionDate = inputValidator.validateDateInput("Entrez la date d'emission du devis (JJ-MM-AAAA) :");
 
-        LocalDate validityDate =inputValidator.validateDateInput("Entrez la date de validité du devis (AAAA-MM-JJ) : ");
+        LocalDate validityDate =inputValidator.validateDateInput("Entrez la date de validité du devis (JJ-MM-AAAA) : ");
 
         boolean saveestimate = inputValidator.validateYesNoInput(" Souhaitez-vous enregistrer le devis ? (y/n): ");
 

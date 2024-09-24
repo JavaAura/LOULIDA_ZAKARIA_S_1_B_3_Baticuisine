@@ -26,15 +26,5 @@ public class ClientController {
         return clientService.getClientByName(name);
     }
 
-    public List<Client> getAllClients() {
-        return clientService.getAllClients();
-    }
 
-    public void updateClient(Client client) {
-        clientService.updateClient(client);
-    }
-
-    public void deleteClient(UUID id) {
-        clientService.deleteClient(id);
-    }
 }

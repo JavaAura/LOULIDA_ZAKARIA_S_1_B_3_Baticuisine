@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ClientRepository {
     void save(Client client);
-    Client findById(String id);
+    Client findByName(String id);
 
 
 }
