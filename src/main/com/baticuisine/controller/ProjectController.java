@@ -51,14 +51,6 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
-    public void updateProject(Project project) {
-        projectService.updateProject(project);
-    }
-
-    public void deleteProject(UUID id) {
-        projectService.deleteProject(id);
-    }
-
 
   public double calculateTotalCost(Project project,double vatRate,double marginRate){
       Optional<List <Component>> components = componentService.getComponentByProjectId(project.getId());
